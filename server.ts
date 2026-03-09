@@ -55,6 +55,7 @@ app.post("/analyze", async (req, res) => {
       data?.candidates?.[0]?.content?.parts?.[0]?.text || "No result";
 
     return res.json({ result });
+
   } catch (error) {
     console.error("Analysis error:", error);
     return res.status(500).json({ error: "Analysis failed" });
