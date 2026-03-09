@@ -27,12 +27,11 @@ app.post("/analyze", async (req, res) => {
     }
 
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" +
-        apiKey,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           contents: [
@@ -41,12 +40,12 @@ app.post("/analyze", async (req, res) => {
                 {
                   text:
                     "Analyze the following news text and detect bias or manipulation:\n\n" +
-                    text,
-                },
-              ],
-            },
-          ],
-        }),
+                    text
+                }
+              ]
+            }
+          ]
+        })
       }
     );
 
@@ -55,10 +54,10 @@ app.post("/analyze", async (req, res) => {
     const result =
       data?.candidates?.[0]?.content?.parts?.[0]?.text || "No result";
 
-    res.json({ result });
+    return res.json({ result });
   } catch (error) {
     console.error("Analysis error:", error);
-    res.status(500).json({ error: "Analysis failed" });
+    return res.status(500).json({ error: "Analysis failed" });
   }
 });
 
