@@ -1,12 +1,14 @@
-import cors from "cors";
 import express from "express";
+import cors from "cors";
 
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 
 const PORT = Number(process.env.PORT) || 8080;
 
-app.get("/health", (req, res) => {
+app.get("/health", (_req, res) => {
   res.json({ ok: true });
 });
 
@@ -50,15 +52,16 @@ app.post("/analyze", async (req, res) => {
 
     const data = await response.json();
 
-    res.json({
-      result: data?.candidates?.[0]?.content?.parts?.[0]?.text || "No result",
-    });
+    const result =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text || "No result";
+
+    res.json({ result });
   } catch (error) {
-    console.error(error);
+    console.error("Analysis error:", error);
     res.status(500).json({ error: "Analysis failed" });
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`PressSense backend running on port ${PORT}`);
 });
