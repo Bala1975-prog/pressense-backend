@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 
 const app = express();
@@ -59,5 +60,4 @@ app.post("/analyze", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`PressSense backend running on port ${PORT}`);
-});
+  console.log(`PressSense backend running on port ${PORT}`
